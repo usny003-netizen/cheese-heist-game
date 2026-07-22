@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>🐭 Cheese Heist</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<h1>🐭 CHEESE HEIST 🧀</h1>
+
+<h2>หนูขโมยชีส</h2>
+
+
+<div class="box">
+
+<h3>สร้างห้องเล่น</h3>
+
+
+<input 
+id="playerName"
+placeholder="ใส่ชื่อหนูของคุณ">
+
+
+<br><br>
+
+
+<button onclick="createRoom()">
+🐭 สร้างห้อง
+</button>
+
+
+<button onclick="joinRoom()">
+🔑 เข้าห้อง
+</button>
+
+
+</div>
+
+
+<div class="box">
+
+
+<h3>
+ห้อง:
+<span id="roomID">-</span>
+</h3>
+
+
+<p>
+ผู้เล่น:
+<span id="players">0</span>/8
+</p>
+
+
+<button onclick="startGame()">
+🌙 เริ่มเกม
+</button>
+
+
+</div>
+
+
+
+<script src="game.js"></script>
+
+
+</body>
+
+</html>
