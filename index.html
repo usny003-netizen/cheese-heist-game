@@ -5,7 +5,9 @@
 
 <meta charset="UTF-8">
 
-<title>🐭 Cheese Heist</title>
+<title>
+🐭 Cheese Heist
+</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -20,50 +22,109 @@
 <h2>หนูขโมยชีส</h2>
 
 
+
 <div class="box">
 
-<h3>สร้างห้องเล่น</h3>
+<h3>🐭 Lobby</h3>
 
 
 <input 
 id="playerName"
-placeholder="ใส่ชื่อหนูของคุณ">
+placeholder="ชื่อหนูของคุณ">
 
 
-<br><br>
+<br>
 
 
 <button onclick="createRoom()">
-🐭 สร้างห้อง
+สร้างห้อง
 </button>
 
 
 <button onclick="joinRoom()">
-🔑 เข้าห้อง
+เข้าห้อง
 </button>
 
 
+<p>
+รหัสห้อง:
+<span id="roomID">
+-
+</span>
+</p>
+
+
+<p>
+ผู้เล่น:
+<span id="players">
+0
+</span>
+/8
+</p>
+
+
 </div>
+
+
+
+
+
+<div class="box">
+
+
+<h3 id="phase">
+รอเริ่มเกม
+</h3>
+
+
+<h2 id="clock">
+🌙 -
+</h2>
+
+
+<p id="awake">
+-
+</p>
+
+
+
+<button onclick="startGame()">
+🌙 เริ่มเกม
+</button>
+
+
+
+<button onclick="nextNight()">
+⏰ เวลาถัดไป
+</button>
+
+
+
+<button onclick="stealCheese()">
+🧀 ขโมยชีส
+</button>
+
+
+
+</div>
+
+
+
 
 
 <div class="box">
 
 
 <h3>
-ห้อง:
-<span id="roomID">-</span>
+สถานะเกม
 </h3>
 
 
-<p>
-ผู้เล่น:
-<span id="players">0</span>/8
-</p>
+<div id="status">
 
+-
 
-<button onclick="startGame()">
-🌙 เริ่มเกม
-</button>
+</div>
 
 
 </div>
