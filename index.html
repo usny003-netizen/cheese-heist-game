@@ -16,7 +16,6 @@
 
 <body>
 
-
 <h1>🐭 CHEESE HEIST 🧀</h1>
 
 <h2>หนูขโมยชีส</h2>
@@ -25,16 +24,13 @@
 
 <div class="box">
 
-<h3>🐭 ห้องเล่น</h3>
+<h3>🐭 Lobby</h3>
+
+<input id="playerName"
+placeholder="ชื่อหนู">
 
 
-<input 
-id="playerName"
-placeholder="ใส่ชื่อหนู">
-
-
-<br><br>
-
+<br>
 
 <button onclick="createRoom()">
 สร้างห้อง
@@ -46,21 +42,15 @@ placeholder="ใส่ชื่อหนู">
 </button>
 
 
-
 <p>
 รหัสห้อง:
-<span id="roomID">
--
-</span>
+<span id="roomID">-</span>
 </p>
 
 
 <p>
 ผู้เล่น:
-<span id="playerCount">
-0
-</span>
-/8
+<span id="playerCount">0</span>/8
 </p>
 
 
@@ -72,22 +62,15 @@ placeholder="ใส่ชื่อหนู">
 
 <div class="box">
 
-
-<h3>
-สถานะเกม
-</h3>
-
-
-<h2 id="phase">
+<h3 id="phase">
 รอเริ่มเกม
-</h2>
+</h3>
 
 
 <button onclick="startGame()">
 🌙 เริ่มเกม
 </button>
 
-<br><br>
 
 <button onclick="nextNight()">
 ⏰ เวลาถัดไป
@@ -99,9 +82,10 @@ placeholder="ใส่ชื่อหนู">
 </button>
 
 
-<h3 id="nightStatus">
-ยังไม่เริ่มกลางคืน
-</h3>
+<p id="nightStatus">
+-
+</p>
+
 
 </div>
 
@@ -111,21 +95,63 @@ placeholder="ใส่ชื่อหนู">
 
 <div class="box">
 
-
 <h3>
-🃏 ข้อมูลบทบาท (ทดสอบ)
+🃏 การ์ดบทบาท (ทดสอบ)
 </h3>
 
 
 <div id="roleList">
-
 ยังไม่มีข้อมูล
-
 </div>
 
 
 </div>
 
+
+
+
+
+<div class="box">
+
+<h3>
+☀️ กลางวัน
+</h3>
+
+
+<p id="dayStatus">
+ยังไม่เช้า
+</p>
+
+
+<select id="voteSelect">
+
+<option>
+เลือกผู้ต้องสงสัย
+</option>
+
+
+</select>
+
+
+<br>
+
+
+<button onclick="votePlayer()">
+🗳️ โหวต
+</button>
+
+
+<h4>
+ผลโหวต
+</h4>
+
+
+<div id="voteResult">
+-
+</div>
+
+
+</div>
 
 
 
