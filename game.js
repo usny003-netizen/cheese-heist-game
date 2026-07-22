@@ -1,13 +1,19 @@
 // 🐭 CHEESE HEIST V1
 
 
-let roomID = "";
+let roomID="";
 
-let players = [];
+let players=[];
 
-let cheeseLocation = "กลางโต๊ะ";
 
-let nightTime = 1;
+let cheese="โต๊ะกลาง";
+
+
+let time=1;
+
+
+let currentPlayer=null;
+
 
 
 
@@ -15,13 +21,15 @@ let nightTime = 1;
 
 function createRoom(){
 
-let name =
+
+let name=
 document.getElementById("playerName").value;
+
 
 
 if(name==""){
 
-alert("ใส่ชื่อหนูก่อน 🐭");
+alert("ใส่ชื่อก่อน");
 
 return;
 
@@ -29,7 +37,7 @@ return;
 
 
 
-roomID =
+roomID=
 Math.random()
 .toString(36)
 .substring(2,8)
@@ -42,35 +50,20 @@ addPlayer(name);
 
 
 document.getElementById("roomID")
-.innerHTML = roomID;
+.innerHTML=roomID;
 
 
-updatePlayers();
+update();
 
 
-}
-
-
-
-// เพิ่มผู้เล่น
-
-function addPlayer(name){
-
-
-players.push({
-
-name:name,
-
-role:null,
-
-wakeTime:null,
-
-alive:true
-
-});
+alert(
+"สร้างห้องสำเร็จ\n"+
+roomID
+);
 
 
 }
+
 
 
 
@@ -80,9 +73,28 @@ alive:true
 function joinRoom(){
 
 
-let name =
+let name=
 document.getElementById("playerName").value;
 
+
+
+if(name=="") return;
+
+
+
+addPlayer(name);
+
+
+update();
+
+
+}
+
+
+
+
+
+function addPlayer(name){
 
 
 if(players.length>=8){
@@ -95,10 +107,17 @@ return;
 
 
 
-addPlayer(name);
+players.push({
 
+name:name,
 
-updatePlayers();
+role:"",
+
+wakeTime:0,
+
+alive:true
+
+});
 
 
 }
@@ -107,16 +126,15 @@ updatePlayers();
 
 
 
-function updatePlayers(){
+function update(){
 
 
 document.getElementById("players")
-.innerHTML =
+.innerHTML=
 players.length;
 
 
 }
-
 
 
 
@@ -143,12 +161,16 @@ setupGame();
 
 
 
-alert(
-"🌙 เริ่มกลางคืนแล้ว"
-);
+document.getElementById("phase")
+.innerHTML=
+"🌙 กลางคืน";
 
 
-console.log(players);
+nextNight();
+
+
+
+showStatus();
 
 
 }
@@ -157,16 +179,13 @@ console.log(players);
 
 
 
-
-// ตั้งค่าเกม
+// แจกบทบาท
 
 function setupGame(){
 
 
 
-// สุ่มหนูตัวจี๊ด
-
-let sneaky =
+let badMouse=
 
 Math.floor(
 Math.random()*players.length
@@ -174,39 +193,32 @@ Math.random()*players.length
 
 
 
-
-players.forEach((player,index)=>{
-
-
-if(index==sneaky){
+players.forEach((p,i)=>{
 
 
-player.role=
-"หนูตัวจี๊ด 🐹";
+if(i==badMouse){
 
+p.role=
+"🐹 หนูตัวจี๊ด";
 
 }else{
 
-
-player.role=
-"หนูทั่วไป 🐭";
-
+p.role=
+"🐭 หนูทั่วไป";
 
 }
 
 
 
-// ทอยลูกเต๋าเวลา
-
-player.wakeTime =
+p.wakeTime=
 
 Math.floor(
 Math.random()*6
 )+1;
 
 
-
 });
+
 
 
 }
@@ -215,17 +227,18 @@ Math.random()*6
 
 
 
-
-// เรียกเวลาตื่น
-
-
-function nightRound(){
+// เดินกลางคืน
 
 
+function nextNight(){
 
-if(nightTime>6){
 
-dayPhase();
+
+if(time>6){
+
+alert(
+"☀️ เช้าแล้ว"
+);
 
 return;
 
@@ -233,22 +246,49 @@ return;
 
 
 
-let awakePlayers =
+let awake=
 
 players.filter(
-p=>p.wakeTime==nightTime
+p=>p.wakeTime==time
 );
 
 
 
-console.log(
-"เวลา "+nightTime,
-awakePlayers
-);
+document.getElementById("clock")
+.innerHTML=
+"เวลา ตี "+time;
 
 
 
-nightTime++;
+if(awake.length){
+
+
+currentPlayer=awake[0];
+
+
+document.getElementById("awake")
+.innerHTML=
+"🐭 หนูที่ตื่น: "
++currentPlayer.name;
+
+
+
+}else{
+
+
+currentPlayer=null;
+
+
+document.getElementById("awake")
+.innerHTML=
+"😴 ไม่มีหนูตื่น";
+
+
+}
+
+
+
+time++;
 
 
 }
@@ -257,14 +297,82 @@ nightTime++;
 
 
 
-// เช้า
+// ขโมยชีส
 
-function dayPhase(){
+
+function stealCheese(){
+
+
+
+if(currentPlayer==null){
+
+alert(
+"ยังไม่มีหนูตื่น"
+);
+
+return;
+
+}
+
+
+
+if(
+currentPlayer.role=="🐹 หนูตัวจี๊ด"
+
+){
+
+
+cheese="ถูกซ่อน";
 
 
 alert(
-"☀️ เช้าแล้ว! เริ่มอภิปรายและโหวต"
+"🐹 หนูตัวจี๊ดขโมยชีส!"
 );
+
+
+}else{
+
+
+alert(
+"🐭 หนูทั่วไปทำอะไรไม่ได้"
+);
+
+
+}
+
+
+
+showStatus();
+
+
+}
+
+
+
+
+
+function showStatus(){
+
+
+let text="";
+
+
+players.forEach(p=>{
+
+
+text+=
+
+p.name+
+" | "+
+p.role+
+" | ตื่น "+p.wakeTime+
+"<br>";
+
+});
+
+
+document.getElementById("status")
+.innerHTML=text;
 
 
 }
