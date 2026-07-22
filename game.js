@@ -3,16 +3,8 @@
 
 let roomID="";
 
+
 let players=[];
-
-
-let cheese="โต๊ะกลาง";
-
-
-let time=1;
-
-
-let currentPlayer=null;
 
 
 
@@ -29,7 +21,7 @@ document.getElementById("playerName").value;
 
 if(name==""){
 
-alert("ใส่ชื่อก่อน");
+alert("กรุณาใส่ชื่อ");
 
 return;
 
@@ -38,6 +30,7 @@ return;
 
 
 roomID=
+
 Math.random()
 .toString(36)
 .substring(2,8)
@@ -53,13 +46,7 @@ document.getElementById("roomID")
 .innerHTML=roomID;
 
 
-update();
-
-
-alert(
-"สร้างห้องสำเร็จ\n"+
-roomID
-);
+updateCount();
 
 
 }
@@ -78,14 +65,20 @@ document.getElementById("playerName").value;
 
 
 
-if(name=="") return;
+if(name==""){
+
+alert("กรุณาใส่ชื่อ");
+
+return;
+
+}
 
 
 
 addPlayer(name);
 
 
-update();
+updateCount();
 
 
 }
@@ -94,7 +87,10 @@ update();
 
 
 
+// เพิ่มผู้เล่น
+
 function addPlayer(name){
+
 
 
 if(players.length>=8){
@@ -113,9 +109,7 @@ name:name,
 
 role:"",
 
-wakeTime:0,
-
-alive:true
+wakeTime:0
 
 });
 
@@ -126,10 +120,12 @@ alive:true
 
 
 
-function update(){
 
 
-document.getElementById("players")
+function updateCount(){
+
+
+document.getElementById("playerCount")
 .innerHTML=
 players.length;
 
@@ -140,37 +136,38 @@ players.length;
 
 
 
+
+
 // เริ่มเกม
 
 function startGame(){
 
 
+
 if(players.length<4){
+
 
 alert(
 "ต้องมีผู้เล่น 4 คนขึ้นไป"
 );
 
+
 return;
+
 
 }
 
 
 
-setupGame();
-
+randomRole();
 
 
 document.getElementById("phase")
 .innerHTML=
-"🌙 กลางคืน";
+"🌙 กลางคืนเริ่มแล้ว";
 
 
-nextNight();
-
-
-
-showStatus();
+showRoles();
 
 
 }
@@ -179,13 +176,18 @@ showStatus();
 
 
 
-// แจกบทบาท
-
-function setupGame(){
 
 
 
-let badMouse=
+// สุ่มบทบาท + เวลา
+
+function randomRole(){
+
+
+
+// สุ่มหนูตัวจี๊ด
+
+let sneaky =
 
 Math.floor(
 Math.random()*players.length
@@ -193,186 +195,98 @@ Math.random()*players.length
 
 
 
-players.forEach((p,i)=>{
+
+players.forEach((player,index)=>{
 
 
-if(i==badMouse){
+if(index===sneaky){
 
-p.role=
+
+player.role=
 "🐹 หนูตัวจี๊ด";
+
 
 }else{
 
-p.role=
+
+player.role=
 "🐭 หนูทั่วไป";
+
 
 }
 
 
 
-p.wakeTime=
+// ลูกเต๋าเวลา 1-6
+
+player.wakeTime=
 
 Math.floor(
 Math.random()*6
 )+1;
 
 
+
 });
 
 
-
 }
 
 
 
 
 
-// เดินกลางคืน
 
 
-function nextNight(){
 
+// แสดงข้อมูลทดสอบ
 
+function showRoles(){
 
-if(time>6){
-
-alert(
-"☀️ เช้าแล้ว"
-);
-
-return;
-
-}
-
-
-
-let awake=
-
-players.filter(
-p=>p.wakeTime==time
-);
-
-
-
-document.getElementById("clock")
-.innerHTML=
-"เวลา ตี "+time;
-
-
-
-if(awake.length){
-
-
-currentPlayer=awake[0];
-
-
-document.getElementById("awake")
-.innerHTML=
-"🐭 หนูที่ตื่น: "
-+currentPlayer.name;
-
-
-
-}else{
-
-
-currentPlayer=null;
-
-
-document.getElementById("awake")
-.innerHTML=
-"😴 ไม่มีหนูตื่น";
-
-
-}
-
-
-
-time++;
-
-
-}
-
-
-
-
-
-// ขโมยชีส
-
-
-function stealCheese(){
-
-
-
-if(currentPlayer==null){
-
-alert(
-"ยังไม่มีหนูตื่น"
-);
-
-return;
-
-}
-
-
-
-if(
-currentPlayer.role=="🐹 หนูตัวจี๊ด"
-
-){
-
-
-cheese="ถูกซ่อน";
-
-
-alert(
-"🐹 หนูตัวจี๊ดขโมยชีส!"
-);
-
-
-}else{
-
-
-alert(
-"🐭 หนูทั่วไปทำอะไรไม่ได้"
-);
-
-
-}
-
-
-
-showStatus();
-
-
-}
-
-
-
-
-
-function showStatus(){
 
 
 let text="";
 
 
-players.forEach(p=>{
+
+players.forEach(player=>{
 
 
 text+=
 
-p.name+
-" | "+
-p.role+
-" | ตื่น "+p.wakeTime+
-"<br>";
+"🐭 "
++
+player.name
++
+"<br>"
+
++
+
+"บทบาท: "
++
+player.role
++
+"<br>"
+
++
+
+"เวลาตื่น: "
++
+"ตี "
++
+player.wakeTime
++
+"<br><br>";
+
+
 
 });
 
 
-document.getElementById("status")
+
+document.getElementById("roleList")
 .innerHTML=text;
+
 
 
 }
