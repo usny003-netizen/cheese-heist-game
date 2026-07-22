@@ -2,9 +2,9 @@ body{
 
 text-align:center;
 
-font-family:Tahoma;
+font-family:Tahoma,Arial;
 
-background:#fff3b0;
+background:#fff2b2;
 
 }
 
@@ -13,14 +13,17 @@ h1{
 
 font-size:45px;
 
+color:#8b5a2b;
+
 }
+
 
 
 .box{
 
 background:white;
 
-width:350px;
+width:380px;
 
 margin:20px auto;
 
@@ -28,28 +31,56 @@ padding:25px;
 
 border-radius:25px;
 
+box-shadow:0 5px 15px #999;
+
 }
+
 
 
 input{
 
-padding:10px;
+padding:12px;
 
 font-size:18px;
+
+border-radius:10px;
 
 }
 
 
+
 button{
 
-padding:12px 25px;
+padding:12px 20px;
 
-margin:10px;
-
-border-radius:20px;
+margin:8px;
 
 font-size:18px;
 
+border-radius:20px;
+
 cursor:pointer;
+
+background:#ffd54f;
+
+border:none;
+
+}
+
+
+
+button:hover{
+
+transform:scale(1.05);
+
+}
+
+
+
+#status{
+
+text-align:left;
+
+line-height:2;
 
 }
