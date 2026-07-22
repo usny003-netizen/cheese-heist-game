@@ -1,10 +1,17 @@
 // 🐭 CHEESE HEIST V1
-// Role + Wake Time System
+// Night Phase Prototype
 
 
 let roomID = "";
 
 let players = [];
+
+let nightHour = 1;
+
+let currentAwake = null;
+
+let cheeseLocation = "โต๊ะกลาง";
+
 
 
 
@@ -32,7 +39,8 @@ function createRoom(){
 
 
 
-    roomID = Math.random()
+    roomID =
+    Math.random()
     .toString(36)
     .substring(2,8)
     .toUpperCase();
@@ -45,7 +53,6 @@ function createRoom(){
 
     document.getElementById("roomID")
     .innerHTML = roomID;
-
 
 
     updateCount();
@@ -81,7 +88,7 @@ function joinRoom(){
 
     if(name === ""){
 
-        alert("กรุณาใส่ชื่อหนู 🐭");
+        alert("กรุณาใส่ชื่อหนู");
 
         return;
 
@@ -90,7 +97,6 @@ function joinRoom(){
 
 
     addPlayer(name);
-
 
 
     updateCount();
@@ -111,7 +117,6 @@ function joinRoom(){
 function addPlayer(name){
 
 
-
     if(players.length >= 8){
 
         alert("ห้องเต็มแล้ว");
@@ -126,9 +131,11 @@ function addPlayer(name){
 
         name:name,
 
-        role:"ยังไม่แจก",
+        role:"",
 
-        wakeTime:0
+        wakeTime:0,
+
+        alive:true
 
     });
 
@@ -150,10 +157,12 @@ function updateCount(){
 
 
     document.getElementById("playerCount")
-    .innerHTML = players.length;
+    .innerHTML =
+    players.length;
 
 
 }
+
 
 
 
@@ -168,25 +177,28 @@ function updateCount(){
 function startGame(){
 
 
-
     if(players.length < 4){
 
 
         alert(
-        "ต้องมีผู้เล่นอย่างน้อย 4 คน 🐭"
+        "ต้องมีผู้เล่น 4 คนขึ้นไป"
         );
 
 
         return;
 
-
     }
-
 
 
 
     randomRole();
 
+
+
+    nightHour = 1;
+
+
+    currentAwake = null;
 
 
     document.getElementById("phase")
@@ -195,14 +207,13 @@ function startGame(){
 
 
 
+    document.getElementById("nightStatus")
+    .innerHTML =
+    "กดเวลาถัดไปเพื่อปลุกหนู";
+
+
+
     showRoles();
-
-
-
-    console.log("ข้อมูลเกม");
-
-    console.log(players);
-
 
 
 }
@@ -214,21 +225,21 @@ function startGame(){
 
 
 
-
 // ==========================
-// สุ่มบทบาท + ลูกเต๋าเวลา
+// สุ่มบทบาท
 // ==========================
 
 function randomRole(){
 
 
 
-    // เลือกหนูตัวจี๊ด 1 คน
+    let sneakyMouse =
 
-    let sneakyMouse = Math.floor(
-        Math.random() * players.length
+    Math.floor(
+        Math.random()
+        *
+        players.length
     );
-
 
 
 
@@ -256,12 +267,14 @@ function randomRole(){
 
 
 
-        // ลูกเต๋า 1-6
+
+        // ลูกเต๋าเวลา 1-6
 
         player.wakeTime =
+
         Math.floor(
             Math.random()*6
-        ) + 1;
+        )+1;
 
 
 
@@ -278,9 +291,8 @@ function randomRole(){
 
 
 
-
 // ==========================
-// แสดงผลทดสอบ
+// แสดงข้อมูลทดสอบ
 // ==========================
 
 function showRoles(){
@@ -294,34 +306,68 @@ function showRoles(){
     players.forEach(function(player){
 
 
+        text +=
 
-        text += `
+        `
+        🐭 ${player.name}<br>
 
-        <div>
+        🃏 ${player.role}<br>
 
-        🐭 ชื่อ:
-        ${player.name}
-
-        <br>
-
-
-        🃏 บทบาท:
-        ${player.role}
-
-        <br>
-
-
-        🎲 เวลาตื่น:
-        ตี ${player.wakeTime}
-
-
-        </div>
-
+        🎲 ตื่นเวลา ตี ${player.wakeTime}
 
         <hr>
-
         `;
 
+
+    });
+
+
+
+    document.getElementById("roleList")
+    .innerHTML =
+    text;
+
+
+
+}
+
+
+
+
+
+
+
+
+// ==========================
+// ระบบกลางคืน
+// ==========================
+
+function nextNight(){
+
+
+
+    if(nightHour > 6){
+
+
+
+        document.getElementById("nightStatus")
+        .innerHTML =
+        "☀️ เช้าแล้ว";
+
+
+        return;
+
+    }
+
+
+
+
+    let awakePlayers =
+
+    players.filter(function(player){
+
+
+        return player.wakeTime === nightHour;
 
 
     });
@@ -329,29 +375,124 @@ function showRoles(){
 
 
 
-    let box =
-    document.getElementById("roleList");
+
+    if(awakePlayers.length === 0){
+
+
+        currentAwake = null;
 
 
 
-    if(box){
+        document.getElementById("nightStatus")
+        .innerHTML =
 
-
-        box.innerHTML = text;
+        "🌙 ตี "
+        +
+        nightHour
+        +
+        " ไม่มีหนูตื่น";
 
 
     }
 
+    else{
+
+
+        currentAwake =
+        awakePlayers[0];
+
+
+
+        document.getElementById("nightStatus")
+        .innerHTML =
+
+        "🌙 ตี "
+        +
+        nightHour
+        +
+        "<br>🐭 "
+        +
+        currentAwake.name
+        +
+        " ตื่นแล้ว";
+
+
+    }
+
+
+
+    nightHour++;
+
+
+}
+
+
+
+
+
+
+
+
+// ==========================
+// ขโมยชีส
+// ==========================
+
+function stealCheese(){
+
+
+
+    if(currentAwake === null){
+
+
+        alert(
+        "ยังไม่มีหนูตื่น"
+        );
+
+
+        return;
+
+    }
+
+
+
+
+    if(
+        currentAwake.role ===
+        "🐹 หนูตัวจี๊ด"
+
+    ){
+
+
+        cheeseLocation =
+        "ถูกซ่อน";
+
+
+
+        alert(
+        "🐹 หนูตัวจี๊ดขโมยชีสแล้ว!"
+        );
+
+
+    }
 
     else{
 
 
         alert(
-        "หา roleList ไม่เจอ"
+        "🐭 หนูทั่วไปไม่ได้ขโมย"
         );
 
 
     }
+
+
+
+    document.getElementById("nightStatus")
+    .innerHTML +=
+
+    "<br>🧀 ชีส: "
+    +
+    cheeseLocation;
 
 
 
