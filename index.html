@@ -25,15 +25,15 @@
 
 <div class="box">
 
-<h3>🐭 Lobby</h3>
+<h3>🐭 ห้องเล่น</h3>
 
 
 <input 
 id="playerName"
-placeholder="ชื่อหนูของคุณ">
+placeholder="ใส่ชื่อหนู">
 
 
-<br>
+<br><br>
 
 
 <button onclick="createRoom()">
@@ -46,6 +46,7 @@ placeholder="ชื่อหนูของคุณ">
 </button>
 
 
+
 <p>
 รหัสห้อง:
 <span id="roomID">
@@ -56,54 +57,11 @@ placeholder="ชื่อหนูของคุณ">
 
 <p>
 ผู้เล่น:
-<span id="players">
+<span id="playerCount">
 0
 </span>
 /8
 </p>
-
-
-</div>
-
-
-
-
-
-<div class="box">
-
-
-<h3 id="phase">
-รอเริ่มเกม
-</h3>
-
-
-<h2 id="clock">
-🌙 -
-</h2>
-
-
-<p id="awake">
--
-</p>
-
-
-
-<button onclick="startGame()">
-🌙 เริ่มเกม
-</button>
-
-
-
-<button onclick="nextNight()">
-⏰ เวลาถัดไป
-</button>
-
-
-
-<button onclick="stealCheese()">
-🧀 ขโมยชีส
-</button>
-
 
 
 </div>
@@ -120,14 +78,40 @@ placeholder="ชื่อหนูของคุณ">
 </h3>
 
 
-<div id="status">
+<h2 id="phase">
+รอเริ่มเกม
+</h2>
 
--
+
+<button onclick="startGame()">
+🌙 เริ่มเกม
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+🃏 ข้อมูลบทบาท (ทดสอบ)
+</h3>
+
+
+<div id="roleList">
+
+ยังไม่มีข้อมูล
 
 </div>
 
 
 </div>
+
+
 
 
 
