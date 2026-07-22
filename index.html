@@ -16,6 +16,7 @@
 
 <body>
 
+
 <h1>🐭 CHEESE HEIST 🧀</h1>
 
 <h2>หนูขโมยชีส</h2>
@@ -24,7 +25,8 @@
 
 <div class="box">
 
-<h3>🐭 Lobby</h3>
+<h3>🏠 ห้องเล่น</h3>
+
 
 <input id="playerName"
 placeholder="ชื่อหนู">
@@ -32,25 +34,38 @@ placeholder="ชื่อหนู">
 
 <br>
 
+
 <button onclick="createRoom()">
-สร้างห้อง
+👑 สร้างห้อง
 </button>
 
 
 <button onclick="joinRoom()">
-เข้าห้อง
+🐭 เข้าห้อง
 </button>
+
 
 
 <p>
 รหัสห้อง:
-<span id="roomID">-</span>
+<span id="roomID">
+-
+</span>
+</p>
+
+
+
+<p id="userStatus">
+-
 </p>
 
 
 <p>
 ผู้เล่น:
-<span id="playerCount">0</span>/8
+<span id="playerCount">
+0
+</span>
+/8
 </p>
 
 
@@ -70,6 +85,7 @@ placeholder="ชื่อหนู">
 <button onclick="startGame()">
 🌙 เริ่มเกม
 </button>
+
 
 
 <button onclick="nextNight()">
@@ -93,34 +109,53 @@ placeholder="ชื่อหนู">
 
 
 
+
 <div class="box">
 
 <h3>
-🃏 การ์ดบทบาท (ทดสอบ)
+🃏 การ์ดของฉัน
 </h3>
 
 
-<div id="roleList">
-ยังไม่มีข้อมูล
+<select id="myPlayer">
+
+<option>
+เลือกชื่อ
+</option>
+
+</select>
+
+
+<br>
+
+
+<button onclick="openCard()">
+เปิดการ์ด
+</button>
+
+
+
+<div id="myCard">
+
+🃏 ปิดอยู่
+
 </div>
 
 
 </div>
+
+
 
 
 
 
 
 <div class="box">
+
 
 <h3>
 ☀️ กลางวัน
 </h3>
-
-
-<p id="dayStatus">
-ยังไม่เช้า
-</p>
 
 
 <select id="voteSelect">
@@ -128,7 +163,6 @@ placeholder="ชื่อหนู">
 <option>
 เลือกผู้ต้องสงสัย
 </option>
-
 
 </select>
 
@@ -141,23 +175,21 @@ placeholder="ชื่อหนู">
 </button>
 
 
-<h4>
-ผลโหวต
-</h4>
-
 
 <div id="voteResult">
+
 -
+
 </div>
 
 
 </div>
+
 
 
 
 
 <script src="game.js"></script>
-
 
 </body>
 
